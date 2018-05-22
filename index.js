@@ -39,6 +39,10 @@ function Prompt() {
   // Make sure no default is set (so it won't be printed)
   this.opt.default = null;
 
+  // If wordComplete is true, set suggestOnly to false
+  if (this.opt.wordComplete)
+    this.opt.suggestOnly = true;
+    
   this.paginator = new Paginator();
 }
 util.inherits(Prompt, Base);
@@ -215,11 +219,23 @@ Prompt.prototype.onKeypress = function(e) {
 
   if (keyName === 'tab' && this.opt.suggestOnly) {
     if (this.currentChoices.getChoice(this.selected)) {
-      this.rl.write(ansiEscapes.cursorLeft);
       var autoCompleted = this.currentChoices.getChoice(this.selected).value;
-      this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
-      this.rl.line = autoCompleted
-      this.render();
+      if (this.opt.wordComplete) {
+        var words = this.rl.line.split(" ");
+        var lastWord = words.pop();
+        // console.log("starts["+ autoCompleted + "]");
+        // this.rl.write(ansiEscapes.cursorBackward(lastWord.length));
+        this.rl.write(ansiEscapes.cursorLeft);
+        // this.rl.write(autoCompleted);
+        this.rl.line = (words.length != 0 ? words.join(" ") + " ": "" ) + autoCompleted;
+        this.rl.write(ansiEscapes.cursorRight);
+        this.render();
+      } else {
+        this.rl.write(ansiEscapes.cursorLeft);
+        this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
+        this.rl.line = autoCompleted
+        this.render();
+      }
     }
   } else if (keyName === 'down') {
     len = this.currentChoices.length;

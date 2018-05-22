@@ -33,7 +33,7 @@ Change `autocomplete` to whatever you might prefer.
 
 > **Note:** _allowed options written inside square brackets (`[]`) are optional. Others are required._
 
-`type`, `name`, `message`, `source`[, `pageSize`, `filter`, `when`, `suggestOnly`, `validate`]
+`type`, `name`, `message`, `source`[, `pageSize`, `filter`, `when`, `suggestOnly`, `wordComplete`, `validate`]
 
 See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source** and **suggestOnly**.
 
@@ -42,6 +42,8 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 **Source** will be called once at at first before the user types anything with **null** as the value. If a new search is triggered by user input it maintains the correct order, meaning that if the first call completes after the second starts, the results of the first call are never displayed.
 
 **suggestOnly** is default **false**. Setting it to true turns the input into a normal text input. Meaning that pressing enter selects whatever value you currently have. And pressing tab autocompletes the currently selected value in the list. This way you can accept manual input instead of forcing a selection from the list.
+
+**wordComplete** is default **false**. This attribute is used when you want to replace only the last word in current text with the selected choice, instead of the whole answer. If this is set, **suggestOnly** is set to true.
 
 **validate** is only active when **suggestOnly** is set to **true**. It behaves like validate for the input prompt.
 
