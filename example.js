@@ -94,6 +94,20 @@ function searchStates(answers, input) {
   });
 }
 
+function search(answers, input) {
+  input = input || '';
+  var words = input.split(" ");
+  input = words[words.length - 1];
+  return new Promise(function(resolve) {
+    setTimeout(function() {
+      var fuzzyResult = fuzzy.filter(input, foods.concat(states));
+      resolve(fuzzyResult.map(function(el) {
+        return el.original;
+      }));
+    }, _.random(30));
+  });
+}
+
 
 function searchFood(answers, input) {
   input = input || '';
@@ -107,7 +121,20 @@ function searchFood(answers, input) {
   });
 }
 
-inquirer.prompt([
+inquirer.prompt([{
+    type: 'autocomplete',
+    name: 'story',
+    suggestOnly: true,
+    wordComplete: true,
+    message: 'Tell me a story.',
+    source: search,
+    pageSize: 3,
+    validate: function(val) {
+      return val
+        ? true
+        : 'Type something!';
+    }
+  },
   {
     type: 'autocomplete',
     name: 'fruit',
