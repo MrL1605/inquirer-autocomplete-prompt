@@ -129,11 +129,15 @@ inquirer.prompt([{
     message: 'Tell me a story.',
     source: search,
     pageSize: 3,
+    prefix: "HH",
+    suffix: "DD",
+    replaceOnSubmit: function(answers, currentAnswer) {
+        return "Oh really? " + currentAnswer;
+    },
     validate: function(val) {
-      return val
-        ? true
-        : 'Type something!';
-    }
+      return val ? 
+        true : 'Type something!';
+    } 
   },
   {
     type: 'autocomplete',
@@ -144,8 +148,7 @@ inquirer.prompt([{
     pageSize: 4,
     validate: function(val) {
       return val
-        ? true
-        : 'Type something!';
+        ? true : 'Type something!';
     }
   }, {
     type: 'autocomplete',

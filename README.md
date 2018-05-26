@@ -1,17 +1,13 @@
 # inquirer-autocomplete-prompt
 
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mokkabonna/inquirer-autocomplete-prompt.svg)](https://greenkeeper.io/)
-
 Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 
-[![build status](https://secure.travis-ci.org/mokkabonna/inquirer-autocomplete-prompt.svg)](http://travis-ci.org/mokkabonna/inquirer-autocomplete-prompt)
-[![dependency status](https://david-dm.org/mokkabonna/inquirer-autocomplete-prompt.svg)](https://david-dm.org/mokkabonna/inquirer-autocomplete-prompt)
 
 ## Installation
 
 ```
-npm install --save inquirer-autocomplete-prompt
+npm i -S inquirer-autocomplete
 ```
 
 ## Usage
@@ -20,7 +16,7 @@ npm install --save inquirer-autocomplete-prompt
 This prompt is anonymous, meaning you can register this prompt with the type name you please:
 
 ```javascript
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
+inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete'));
 inquirer.prompt({
   type: 'autocomplete',
   ...
@@ -47,11 +43,12 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **validate** is only active when **suggestOnly** is set to **true**. It behaves like validate for the input prompt.
 
+**replaceOnSubmit** is a function which will be called after user submits an answer. Similar to source it takes past answers and current question's answer as parameters and expects a string. This string will be replaced by current question and then moves to next question/exits. 
 
 #### Example
 
 ```javascript
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
+inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete'));
 inquirer.prompt([{
   type: 'autocomplete',
   name: 'from',
@@ -72,6 +69,7 @@ I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy)
 
 ## Credits
 [Martin Hansen](https://github.com/mokkabonna/)
+[Lalit Umbarkar](https://github.com/mrl1605/)
 
 ## License
 
