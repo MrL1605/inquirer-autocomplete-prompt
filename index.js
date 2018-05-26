@@ -161,7 +161,19 @@ Prompt.prototype.onSubmit = function(line) {
 
     self.status = 'answered';
     // Rerender prompt
-    self.render();
+    // self.screen.done();
+    if (self.opt.replaceOnSubmit) {
+        self.screen.clean();        // Clears any options, if populated
+        
+        self.rl.setPrompt('');      // So that rl does add prompt to it.
+        self.rl.output.unmute();
+        
+        self.rl.output.write(ansiEscapes.eraseLine);
+        self.rl.output.write(ansiEscapes.cursorLeft);
+        self.rl.output.write(self.opt.replaceOnSubmit(self.answers, choice.value), "");
+    } else {
+        self.render();
+    }
     self.screen.done();
     self.done(choice.value);
   })(choice.value);
